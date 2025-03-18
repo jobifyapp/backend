@@ -15,7 +15,7 @@ app.use(express.json())
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 
-app.use('/static', express.static(path.join(__dirname, '../frontend/static')))
+app.use('../static', express.static(path.join(__dirname, '../frontend/static')))
 
 // PAGES //
 
@@ -101,6 +101,22 @@ app.get('/portfolio/:id', async (req, res) => {
                 })
             })
         })
+    } catch (err) {
+        console.error('Database error:', err)
+        res.status(500).send('Server error')
+    }
+})
+
+// LISTING //
+
+const ltemplate = path.join(__dirname, 'templates/listing.html')
+
+app.get('/listings/:id', async (req, res) => {
+    const id = req.params.id
+    console.log(`Someone tried view portfolio with ID: ${id}`)
+
+    try {
+
     } catch (err) {
         console.error('Database error:', err)
         res.status(500).send('Server error')
