@@ -1,10 +1,8 @@
 const bcrypt = require('bcrypt')
 const cors = require('cors')
-const crypto = require('crypto')
 const pool = require('./database')
 const express = require('express')
 const fs = require('fs')
-const nodemailer = require('nodemailer')
 const path = require('path')
 const app = express()
 const port = 3000
@@ -109,7 +107,6 @@ app.get('/portfolio/:id', async (req, res) => {
 
 // LISTING //
 
-const ltemplate = path.join(__dirname, 'templates/listing.html')
 
 app.get('/listings/:id', async (req, res) => {
     const id = req.params.id
@@ -134,6 +131,13 @@ app.get('/panel', (req, res) => {
 })
 
 // FUNCTIONS //
+
+app.post('/search', async (req) => {
+    const tags = req.body
+    try {
+        const result = await pool.query('SELECT * from listings WHERE tags @> $1::TEXT[]')
+    }
+})
 
 // ROUTES //
 
