@@ -107,13 +107,41 @@ app.get('/portfolio/:id', async (req, res) => {
 
 // LISTING //
 
-
 app.get('/listings/:id', async (req, res) => {
     const id = req.params.id
-    console.log(`Someone tried view portfolio with ID: ${id}`)
+    console.log(`Someone tried view listing with ID: ${id}`)
 
     try {
+        const listing = await pool.query('SELECT * FROM listings WHERE id = $1', [id])
+        if (listing.rows.length === 0) {
+            return res.status(404).send('Listing does not exist')
+        }
+        const listinginfo = listing.rows[0]
+        console.log(listinginfo)
 
+        fs.readFile(ltemplate, 'utf8', (err, template) => {
+            if (err) {
+                console.error('Error reading template:', err)
+                return res.status(500).send('Server error')
+            }
+
+            let renderedPortfolio = template
+                .replace('{{icon}}', listinginfo.icon)
+
+            const tempFile = path.join(__dirname, `temp_${id}.html`)
+            fs.writeFile(tempFile, renderedPortfolio, (err) => {
+                if (err) {
+                    console.error('Error creating temp file:', err)
+                    return res.status(500).send('Server error')
+                }
+
+                res.sendFile(tempFile, (err) => {
+                    fs.unlink(tempFile, (err) => {
+                        if (err) console.error('Error deleting temp file:', err)
+                    })
+                })
+            })
+        })
     } catch (err) {
         console.error('Database error:', err)
         res.status(500).send('Server error')
@@ -135,7 +163,11 @@ app.get('/panel', (req, res) => {
 app.post('/search', async (req) => {
     const tags = req.body
     try {
-        const result = await pool.query('SELECT * from listings WHERE tags @> $1::TEXT[]')
+        const result = await pool.query('SELECT * from listings WHERE tags @> $1::TEXT[]', [tags])
+        console.log(`Found ${result.length} results matching tags, sending to viewer`)
+        return result.rows
+    } catch (error) {
+        console.error('Error fetching items:', error)
     }
 })
 
