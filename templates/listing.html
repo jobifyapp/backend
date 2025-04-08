@@ -6,7 +6,7 @@
         <!--FILL IN THE FAVICON-->
         <link rel="icon" type="image/x-icon" sizes="32x32" href="">
         <meta name="author" content="Emerson Reinhard">
-        <link rel="stylesheet" href="../../frontend/static/css/style.css">
+        <link rel="stylesheet" href="/static/css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,7 +32,7 @@
         <div id="notifications"></div>
         <!--MODALS NEEDED: CONTACT, -->
         <div id="modals">
-            <div id="contactModal" class="modalWrapper">
+            <div id="contactModal" class="modalWrapper hidden">
                 <div class="modal">
                     <div class="title">Contact</div>
                     <div class="text">
@@ -120,17 +120,32 @@
             </div>
             <div class="listing">
                 <div class="splash">
-                    <img src="https://www.ziprecruiter.com/svc/fotomat/public-nosensitive-ziprecruiter-logos/company/e08e2862.png">
+                    <div class="container" style="background: url('SplashIcon') center center / cover no-repeat"></div>
                 </div>
                 <div class="info">
                     <div class="icon">
-                        <img src="https://www.ziprecruiter.com/svc/fotomat/public-nosensitive-ziprecruiter-logos/company/e08e2862.png">
+                        <img src="Icon">
                     </div>
                     <div class="text">
-                        <h1>McDonald's</h1>
-                        <h3>Fulton, MO</h3>
+                        <h1>Name</h1>
+                        <h3>Location</h3>
+                    </div>
+                    <div class="details">
+                        <div class="blurb">
+                            <i class="fas fa-coins"></i>
+                            <h3>Wages</h3>
+                        </div>
+                        <div class="blurb">
+                            <i class="fas fa-suitcase"></i>
+                            <h3>Arrangements</h3>
+                        </div>
+                        <div class="blurb">
+                            <i class="fas fa-clock"></i>
+                            <h3>Posted</h3>
+                        </div>
                     </div>
                 </div>
+                <hr>
             </div>
             <footer>
                 <div class="footer">
@@ -189,7 +204,7 @@
                 </div>
             </footer>
         </div>
-        <script src="../../frontend/static/js/script.js"></script>
+        <script src="/static/js/script.js"></script>
     </body>
 </html>
 

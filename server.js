@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 
-app.use('../static', express.static(path.join(__dirname, '../frontend/static')))
+app.use('/static', express.static(path.join(__dirname, '../frontend/static')))
 
 // PAGES //
 
@@ -107,9 +107,15 @@ app.get('/portfolio/:id', async (req, res) => {
 
 // LISTING //
 
+const ltemplate = path.join(__dirname, 'templates/listing.html')
+
 app.get('/listings/:id', async (req, res) => {
     const id = req.params.id
     console.log(`Someone tried view listing with ID: ${id}`)
+
+    if (isNaN(id)) {
+        return res.status(400).send('Invalid ID');
+    }
 
     try {
         const listing = await pool.query('SELECT * FROM listings WHERE id = $1', [id])
@@ -119,14 +125,36 @@ app.get('/listings/:id', async (req, res) => {
         const listinginfo = listing.rows[0]
         console.log(listinginfo)
 
-        fs.readFile(ltemplate, 'utf8', (err, template) => {
+        if (listinginfo.approved == false) {
+            return res.status(404).send('Listing does not exist')
+        }
+
+        console.log(listinginfo.location)
+        const response = await fetch(`https://api.zippopotam.us/us/${listinginfo.location}`)
+
+        if(!response.ok) {
+            console.error('Error fetching place:', response)
+            return res.status(500).send('Server error')
+        }
+
+        const data = await response.json()
+        console.log(data)
+
+        const city = data.places[0]['place name']
+        const state = data.places[0]['state abbreviation']
+        const formattedcity = `${city}, ${state}`
+
+        fs.readFile(ltemplate, 'utf8', (err, ltemplate) => {
             if (err) {
                 console.error('Error reading template:', err)
                 return res.status(500).send('Server error')
             }
 
-            let renderedPortfolio = template
-                .replace('{{icon}}', listinginfo.icon)
+            let renderedPortfolio = ltemplate
+                .replace('SplashIcon', listinginfo.icon)
+                .replace('Icon', listinginfo.icon)
+                .replace('Name', listinginfo.name)
+                .replace('Location', formattedcity)
 
             const tempFile = path.join(__dirname, `temp_${id}.html`)
             fs.writeFile(tempFile, renderedPortfolio, (err) => {
@@ -160,11 +188,19 @@ app.get('/panel', (req, res) => {
 
 // FUNCTIONS //
 
-app.post('/search', async (req) => {
-    const tags = req.body
+app.post('/search', async (req, res) => {
+    console.log(`NEW /search POST request from ${req.ip}`)
+    const tags = req.body.tags
+    console.log(tags)
     try {
+        if (tags.length == 0) {
+            const result = await pool.query('SELECT * from listings WHERE approved = true')
+            console.log(`Found ${result.rows.length} unfiltered results matching tags, sending to viewer`)
+            return res.status(200).json({ listings: result.rows })
+        }
+
         const result = await pool.query('SELECT * from listings WHERE tags @> $1::TEXT[]', [tags])
-        console.log(`Found ${result.length} results matching tags, sending to viewer`)
+        console.log(`Found ${result.rows.length} results matching tags, sending to viewer`)
         return result.rows
     } catch (error) {
         console.error('Error fetching items:', error)
@@ -190,6 +226,20 @@ app.post('/login', async (req, res) => {
     } catch (error) {
         console.log(`Error trying to run /login route: ${error}`)
         res.status(500).json({ error: 'Internal server error' })
+    }
+})
+
+app.post('/post', async (req, res) => {
+    console.log(`NEW /post POST request from ${req.ip}`)
+    const { name, icon, location, salary, description, arrangements, requirements, skills, responsibilities, benefits } = req.body
+    try {
+        const query = await pool.query('INSERT INTO listings (name, employer, icon, location, salary, arrangements, description, requirements, skills, responsibilities, benefits, created) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id',
+                                               [name, 1, icon, location, salary, arrangements, description, requirements, skills, responsibilities, benefits, Math.floor(Date.now() / 1000)])
+        res.status(201).json({ id: query.rows[0].id })
+    } catch (error) {
+        const ip = req.ip
+        console.log(`[${ip}] ERROR (/register): ${error}`)
+        res.status(500).json({ error: `Server error` })
     }
 })
 
