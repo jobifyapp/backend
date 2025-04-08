@@ -176,6 +176,51 @@ app.get('/listings/:id', async (req, res) => {
     }
 })
 
+// RESOURCES //
+
+const rtemplate = path.join(__dirname, 'templates/article.html')
+
+app.get('/resources/:path', async (req, res) => {
+    const path = req.params.path
+    console.log(`Someone tried view resource with path: ${path}`)
+
+    try {
+        const article = await pool.query('SELECT * FROM resources WHERE path = $1', [path])
+        if (article.rows.length === 0) {
+            return res.status(404).send('Article does not exist')
+        }
+        const articleinfo = article.rows[0]
+        console.log(articleinfo)
+
+        fs.readFile(rtemplate, 'utf8', (err, template) => {
+            if (err) {
+                console.error('Error reading template:', err)
+                return res.status(500).send('Server error')
+            }
+
+            let renderedArticle = template
+                .replace('{{title}}', articleinfo)
+            
+                const tempFile = path.join(__dirname, `temp_${path}.html`)
+                fs.writeFile(tempFile, renderedArticle, (err) => {
+                    if (err) {
+                        console.error("Error creating temp file:", err)
+                        return res.status(500).send('Server error')
+                    }
+
+                    res.sendFile(tempFile, () => {
+                        fs.unlink(tempFile, (err) => {
+                            if (err) console.error('Error deleting temp file:', err)
+                        })
+                    })
+                })
+        })
+    } catch (err) {
+        console.error('Database error:', err)
+        res.status(500).send('Server error')
+    }
+})
+
 // MASTER PAGES //
 
 app.get('/console', (req, res) => {
