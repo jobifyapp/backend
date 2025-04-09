@@ -6,7 +6,7 @@
         <!--FILL IN THE FAVICON-->
         <link rel="icon" type="image/x-icon" sizes="32x32" href="">
         <meta name="author" content="Emerson Reinhard">
-        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="../../../frontend/static/css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,63 +32,16 @@
         <div id="notifications"></div>
         <!--MODALS NEEDED: CONTACT, -->
         <div id="modals">
-            <div id="contactModal" class="modalWrapper">
-                <div class="modal">
-                    <div class="title">Contact</div>
+            <div id="postAnnouncementModal" class="modalWrapper hidden">
+                <div class="modal" style="min-width: 900px">
+                    <div class="title">Post Announcement</div>
                     <div class="text">
-                        This contact system will send a message <strong>directly</strong> to the counselors. All tickets are attached to your account except for tip lines when the anonymous option is selected.
+                        This will send an notification to <strong>all active</strong> accounts, and leave a notification in all accounts inboxes.
                         <br><br>
-                        Please <span class="accent-text">do not send</span> troll tickets, this may lead to repercussions beyond the website. In addition to this, do not boost your ticket, we will get back to you as soon as possible.
+                        Ensure that your message is <span class="accent-text">complete and accurate,</span> as you cannot edit these after they are sent.
                     </div>
-                    <div class="buttons">
-                        <button id="question" class="button">
-                            <div class="icon">
-                                <i class="fas fa-question-circle"></i>
-                            </div>
-                            <div class="textgroup">
-                                <div class="text">Question</div>
-                            </div>
-                        </button>
-                        <button id="arrangeMeeting" class="button">
-                            <div class="icon">
-                                <i class="fas fa-calendar-check"></i>
-                            </div>
-                            <div class="textgroup">
-                                <div class="text">Arrange Meeting</div>
-                            </div>
-                        </button>
-                        <button id="mentalHealth" class="button">
-                            <div class="icon">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                            <div class="textgroup">
-                                <div class="text">Mental Health Support</div>
-                            </div>
-                        </button>
-                        <button id="relationshipCounseling" class="button">
-                            <div class="icon">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <div class="textgroup">
-                                <div class="text">Relationship Counseling</div>
-                            </div>
-                        </button>
-                        <button id="businessInquiry" class="button">
-                            <div class="icon">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
-                            <div class="textgroup">
-                                <div class="text">Business Inquiry</div>
-                            </div>
-                        </button>
-                        <button id="tipLine" class="button">
-                            <div class="icon">
-                                <i class="fas fa-user-secret"></i>
-                            </div>
-                            <div class="textgroup">
-                                <div class="text">Tip Line</div>
-                            </div>
-                        </button>
+                    <div class="inputs">
+                        
                     </div>
                 </div>
             </div>
@@ -124,16 +77,106 @@
                     <div>
                         <div class="option">
                             <div class="splash">
-                                <span class="icon">⭐</span>
+                                <span class="icon">📝</span>
                             </div>
                             <div class="info">
                                 <div class="details">
-                                    <h3 class="name">Test Listings</h3>
+                                    <h3 class="name">Approve Listings</h3>
                                     <div class="blurb">Mrs. Crawford</div>
                                 </div>
                                 <button class="open">
                                     <div class="openmsg">
-                                        <span>Open</span>
+                                        <span>Manage</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="option">
+                            <div class="splash">
+                                <span class="icon">📚</span>
+                            </div>
+                            <div class="info">
+                                <div class="details">
+                                    <h3 class="name">Manage Articles</h3>
+                                    <div class="blurb">Mrs. Bradshaw</div>
+                                </div>
+                                <button class="open">
+                                    <div class="openmsg">
+                                        <span>Manage</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="option">
+                            <div class="splash">
+                                <span class="icon">🛑</span>
+                            </div>
+                            <div class="info">
+                                <div class="details">
+                                    <h3 class="name">View Reports</h3>
+                                    <div class="blurb">Mrs. Bradshaw</div>
+                                </div>
+                                <button class="open">
+                                    <div class="openmsg">
+                                        <span>Manage</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="option">
+                            <div class="splash">
+                                <span class="icon">📩</span>
+                            </div>
+                            <div class="info">
+                                <div class="details">
+                                    <h3 class="name">Ticket Panel</h3>
+                                    <div class="blurb">Mrs. Bradshaw</div>
+                                </div>
+                                <button class="open">
+                                    <div class="openmsg">
+                                        <span>Manage</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="option">
+                            <div class="splash">
+                                <span class="icon">👥</span>
+                            </div>
+                            <div class="info">
+                                <div class="details">
+                                    <h3 class="name">Manage Accounts</h3>
+                                    <div class="blurb">Mrs. Bradshaw</div>
+                                </div>
+                                <button class="open" onclick="window.location.href = '/accounts'">
+                                    <div class="openmsg">
+                                        <span>Manage</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="option">
+                            <div class="splash">
+                                <span class="icon">🔔</span>
+                            </div>
+                            <div class="info">
+                                <div class="details">
+                                    <h3 class="name">Release Update</h3>
+                                    <div class="blurb">Mrs. Bradshaw</div>
+                                </div>
+                                <button class="open" id="postannouncements">
+                                    <div class="openmsg">
+                                        <span>Manage</span>
                                     </div>
                                 </button>
                             </div>
@@ -198,7 +241,7 @@
                 </div>
             </footer>
         </div>
-        <script src="../static/js/script.js"></script>
+        <script src="../../../frontend/static/js/script.js"></script>
     </body>
 </html>
 

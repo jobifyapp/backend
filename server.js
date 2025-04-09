@@ -232,6 +232,26 @@ app.get('/console', (req, res) => {
     }
 })
 
+app.get('/console/:path', (req, res) => {
+    const admin = true
+    const path = req.params.path
+    if (!(admin === true)) {
+        return res.redirect('/')
+    } else if (path == 'listings') {
+        res.sendFile(path.join(__dirname, '../backend/templates/master/console/listings.html'))
+    } else if (path == 'resources') {
+        res.sendFile(path.join(__dirname, '../backend/templates/master/console/resources.html'))
+    } else if (path == 'reports') {
+        res.sendFile(path.join(__dirname, '../backend/templates/master/console/reports.html'))
+    } else if (path == 'tickets') {
+        res.sendFile(path.join(__dirname, '../backend/templates/master/console/tickets.html'))
+    } else if (path == 'accounts') {
+        res.sendFile(path.join(__dirname, '../backend/templates/master/console/accounts.html'))
+    } else {
+        return res.redirect('/console')
+    }
+})
+
 app.get('/panel', (req, res) => {
     res.sendFile(path.join(__dirname, '../backend/master/panel.html'))
 })
