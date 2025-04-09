@@ -224,7 +224,12 @@ app.get('/resources/:path', async (req, res) => {
 // MASTER PAGES //
 
 app.get('/console', (req, res) => {
-    res.sendFile(path.join(__dirname, '../backend/master/console.html'))
+    const admin = true
+    if (!(admin === true)) {
+        return res.redirect('/')
+    } else {
+        res.sendFile(path.join(__dirname, '../backend/templates/master/console.html'))
+    }
 })
 
 app.get('/panel', (req, res) => {
@@ -238,15 +243,47 @@ app.post('/search', async (req, res) => {
     const tags = req.body.tags
     console.log(tags)
     try {
-        if (tags.length == 0) {
-            const result = await pool.query('SELECT * from listings WHERE approved = true')
-            console.log(`Found ${result.rows.length} unfiltered results matching tags, sending to viewer`)
-            return res.status(200).json({ listings: result.rows })
-        }
+        let result
 
-        const result = await pool.query('SELECT * from listings WHERE tags @> $1::TEXT[]', [tags])
-        console.log(`Found ${result.rows.length} results matching tags, sending to viewer`)
-        return result.rows
+        if (tags.length == 0) {
+            result = await pool.query('SELECT * from listings WHERE approved = true')
+            console.log(`Found ${result.rows.length} unfiltered results matching tags, sending to viewer`)
+        } else {
+            const result = await pool.query('SELECT * from listings WHERE tags @> $1::TEXT[]', [tags])
+            console.log(`Found ${result.rows.length} results matching tags, sending to viewer`)
+        }
+        
+        const listings = await Promise.all(result.rows.map(async (listing) => {
+            try {
+                const response = await fetch(`https://api.zippopotam.us/us/${listing.location}`)
+
+                if (!response.ok) {
+                    console.error(`Error fetching place for zip code ${listing.location}:`, response)
+                    return {
+                        ...listing,
+                        location: 'N/A'
+                    }
+                }
+
+                const data = await response.json();
+                const city = data.places[0]['place name'];
+                const state = data.places[0]['state abbreviation'];
+                const formattedCity = `${city}, ${state}`;
+
+                return {
+                    ...listing,
+                    location: formattedCity
+                }
+            } catch (error) {
+                console.error(`Error fetching location for zipcode ${listing.location}:`, error)
+                return {
+                    ...listing,
+                    location: 'N/A'
+                }
+            }
+        }))
+
+        return res.status(200).json({ listings: listings })
     } catch (error) {
         console.error('Error fetching items:', error)
     }
