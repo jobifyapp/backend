@@ -155,6 +155,7 @@ app.get('/listings/:id', async (req, res) => {
                 .replace('Icon', listinginfo.icon)
                 .replace('Name', listinginfo.name)
                 .replace('Location', formattedcity)
+                .replace('AboutBlurb', listing.description)
 
             const tempFile = path.join(__dirname, `temp_${id}.html`)
             fs.writeFile(tempFile, renderedPortfolio, (err) => {
@@ -232,23 +233,92 @@ app.get('/console', (req, res) => {
     }
 })
 
-app.get('/console/:path', (req, res) => {
+app.get('/console/:sect', (req, res) => {
     const admin = true
-    const path = req.params.path
+    const sect = req.params.sect
     if (!(admin === true)) {
         return res.redirect('/')
-    } else if (path == 'listings') {
+    } else if (sect == 'listings') {
         res.sendFile(path.join(__dirname, '../backend/templates/master/console/listings.html'))
-    } else if (path == 'resources') {
+    } else if (sect == 'resources') {
         res.sendFile(path.join(__dirname, '../backend/templates/master/console/resources.html'))
-    } else if (path == 'reports') {
+    } else if (sect == 'reports') {
         res.sendFile(path.join(__dirname, '../backend/templates/master/console/reports.html'))
-    } else if (path == 'tickets') {
+    } else if (sect == 'tickets') {
         res.sendFile(path.join(__dirname, '../backend/templates/master/console/tickets.html'))
-    } else if (path == 'accounts') {
+    } else if (sect == 'accounts') {
         res.sendFile(path.join(__dirname, '../backend/templates/master/console/accounts.html'))
     } else {
         return res.redirect('/console')
+    }
+})
+
+const cltemplate = path.join(__dirname, 'templates/master/clisting.html')
+
+app.get('/console/listings/:id', async (req, res) => {
+    const id = req.params.id
+    console.log(`Counselor tried view listing with ID: ${id}`)
+
+    if (isNaN(id)) {
+        return res.status(400).send('Invalid ID');
+    }
+
+    try {
+        const listing = await pool.query('SELECT * FROM listings WHERE id = $1', [id])
+        if (listing.rows.length === 0) {
+            return res.status(404).send('Listing does not exist')
+        }
+        const listinginfo = listing.rows[0]
+        console.log(listinginfo)
+
+        if (listinginfo.approved == true) {
+            return res.status(404).send('Listing already approved')
+        }
+
+        console.log(listinginfo.location)
+        const response = await fetch(`https://api.zippopotam.us/us/${listinginfo.location}`)
+
+        if(!response.ok) {
+            console.error('Error fetching place:', response)
+            return res.status(500).send('Server error')
+        }
+
+        const data = await response.json()
+        console.log(data)
+
+        const city = data.places[0]['place name']
+        const state = data.places[0]['state abbreviation']
+        const formattedcity = `${city}, ${state}`
+
+        fs.readFile(cltemplate, 'utf8', (err, cltemplate) => {
+            if (err) {
+                console.error('Error reading template:', err)
+                return res.status(500).send('Server error')
+            }
+
+            let renderedPortfolio = cltemplate
+                .replace('SplashIcon', listinginfo.icon)
+                .replace('Icon', listinginfo.icon)
+                .replace('Name', listinginfo.name)
+                .replace('Location', formattedcity)
+
+            const tempFile = path.join(__dirname, `temp_${id}.html`)
+            fs.writeFile(tempFile, renderedPortfolio, (err) => {
+                if (err) {
+                    console.error('Error creating temp file:', err)
+                    return res.status(500).send('Server error')
+                }
+
+                res.sendFile(tempFile, (err) => {
+                    fs.unlink(tempFile, (err) => {
+                        if (err) console.error('Error deleting temp file:', err)
+                    })
+                })
+            })
+        })
+    } catch (err) {
+        console.error('Database error:', err)
+        res.status(500).send('Server error')
     }
 })
 
@@ -272,6 +342,48 @@ app.post('/search', async (req, res) => {
             const result = await pool.query('SELECT * from listings WHERE tags @> $1::TEXT[]', [tags])
             console.log(`Found ${result.rows.length} results matching tags, sending to viewer`)
         }
+        
+        const listings = await Promise.all(result.rows.map(async (listing) => {
+            try {
+                const response = await fetch(`https://api.zippopotam.us/us/${listing.location}`)
+
+                if (!response.ok) {
+                    console.error(`Error fetching place for zip code ${listing.location}:`, response)
+                    return {
+                        ...listing,
+                        location: 'N/A'
+                    }
+                }
+
+                const data = await response.json();
+                const city = data.places[0]['place name'];
+                const state = data.places[0]['state abbreviation'];
+                const formattedCity = `${city}, ${state}`;
+
+                return {
+                    ...listing,
+                    location: formattedCity
+                }
+            } catch (error) {
+                console.error(`Error fetching location for zipcode ${listing.location}:`, error)
+                return {
+                    ...listing,
+                    location: 'N/A'
+                }
+            }
+        }))
+
+        return res.status(200).json({ listings: listings })
+    } catch (error) {
+        console.error('Error fetching items:', error)
+    }
+})
+
+app.post('/searchraw', async (req, res) => {
+    console.log(`NEW /searchraw POST request from ${req.ip}`)
+    try {
+        const result = await pool.query('SELECT * from listings WHERE approved = false')
+        console.log(`Found ${result.rows.length} unfiltered results that need to be reviewed, sending to counselor`)
         
         const listings = await Promise.all(result.rows.map(async (listing) => {
             try {

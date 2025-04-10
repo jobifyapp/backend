@@ -6,7 +6,7 @@
         <!--FILL IN THE FAVICON-->
         <link rel="icon" type="image/x-icon" sizes="32x32" href="">
         <meta name="author" content="Emerson Reinhard">
-        <link rel="stylesheet" href="../../../frontend/static/css/style.css">
+        <link rel="stylesheet" href="/static/css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,9 +40,34 @@
                         <br><br>
                         Ensure that your message is <span class="accent-text">complete and accurate,</span> as you cannot edit these after they are sent.
                     </div>
-                    <div class="inputs">
-                        
-                    </div>
+                    <form class="inputs">
+                        <label>Title</label>
+                        <input type="text" id="title" class="modalinput short">
+                        <label>Message</label>
+                        <input type="text" id="title" class="modalinput short">
+                        <label>Type</label>
+                        <div class="radioinput rifour">
+                            <div class="roption">
+                                <input type="radio" name="s" id="notice" class="radioinput radio">
+                                <label for="notice">Notice (blue)</label>
+                            </div>
+                            <div class="roption">
+                                <input type="radio" name="s" id="success" class="radioinput radio">
+                                <label for="success">Success (green)</label>
+                            </div>
+                            <div class="roption">
+                                <input type="radio" name="s" id="warning" class="radioinput radio">
+                                <label for="warning">Warning (yellow)</label>
+                            </div>
+                            <div class="roption">
+                                <input type="radio" name="s" id="danger" class="radioinput radio">
+                                <label for="danger">Danger (red)</label>
+                            </div>
+                        </div>
+                        <div class="submit">
+                            <input type="submit" value="Post" class="modalbutton">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -63,7 +88,7 @@
                     </div>
                     <div class="right-items">
                         <!--LANGUAGE DROPDOWN GOES HERE-->
-                        <button onclick="openContactModal()" class="contact-button">Contact</button>
+                        <button class="contact-button">Contact</button>
                         <div class="nav-right">
                             <button class="pill-button sign-up">Register</button>
                             <butotn class="pill-button log-in">Log In</butotn>
@@ -84,7 +109,7 @@
                                     <h3 class="name">Approve Listings</h3>
                                     <div class="blurb">Mrs. Crawford</div>
                                 </div>
-                                <button class="open">
+                                <button class="open" onclick="window.location.href = '/console/listings'">
                                     <div class="openmsg">
                                         <span>Manage</span>
                                     </div>
@@ -102,7 +127,7 @@
                                     <h3 class="name">Manage Articles</h3>
                                     <div class="blurb">Mrs. Bradshaw</div>
                                 </div>
-                                <button class="open">
+                                <button class="open" onclick="window.location.href = '/console/resources'">
                                     <div class="openmsg">
                                         <span>Manage</span>
                                     </div>
@@ -113,14 +138,14 @@
                     <div>
                         <div class="option">
                             <div class="splash">
-                                <span class="icon">🛑</span>
+                                <span class="icon">👮</span>
                             </div>
                             <div class="info">
                                 <div class="details">
                                     <h3 class="name">View Reports</h3>
                                     <div class="blurb">Mrs. Bradshaw</div>
                                 </div>
-                                <button class="open">
+                                <button class="open" onclick="window.location.href = '/console/reports'">
                                     <div class="openmsg">
                                         <span>Manage</span>
                                     </div>
@@ -138,7 +163,7 @@
                                     <h3 class="name">Ticket Panel</h3>
                                     <div class="blurb">Mrs. Bradshaw</div>
                                 </div>
-                                <button class="open">
+                                <button class="open" onclick="window.location.href = '/console/tickets'">
                                     <div class="openmsg">
                                         <span>Manage</span>
                                     </div>
@@ -156,7 +181,7 @@
                                     <h3 class="name">Manage Accounts</h3>
                                     <div class="blurb">Mrs. Bradshaw</div>
                                 </div>
-                                <button class="open" onclick="window.location.href = '/accounts'">
+                                <button class="open" onclick="window.location.href = '/console/accounts'">
                                     <div class="openmsg">
                                         <span>Manage</span>
                                     </div>
@@ -174,7 +199,7 @@
                                     <h3 class="name">Release Update</h3>
                                     <div class="blurb">Mrs. Bradshaw</div>
                                 </div>
-                                <button class="open" id="postannouncements">
+                                <button class="open" id="postAnnouncementButton">
                                     <div class="openmsg">
                                         <span>Manage</span>
                                     </div>
@@ -241,7 +266,18 @@
                 </div>
             </footer>
         </div>
-        <script src="../../../frontend/static/js/script.js"></script>
+        <script src="/static/js/script.js"></script>
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const announcementbutton = document.getElementById('postAnnouncementButton')
+            const announcementmodal = document.getElementById('postAnnouncementModal')
+
+            announcementbutton.addEventListener('click', () => {
+                console.log(`HELP ME`)
+                announcementmodal.classList.remove('hidden')
+            })
+        })
+        </script>
     </body>
 </html>
 
