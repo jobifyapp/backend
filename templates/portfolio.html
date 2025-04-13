@@ -2,11 +2,11 @@
 <html lang="en-us">
     <head>
         <meta charset="utf-8">
-        <title>Jobify | Home</title>
+        <title>Jobify × Portfolio</title>
         <!--FILL IN THE FAVICON-->
-        <link rel="icon" type="image/x-icon" sizes="32x32" href="">
+        <link rel="icon" type="image/x-icon" sizes="32x32" href="/static/img/logo.png">
         <meta name="author" content="Emerson Reinhard">
-        <link rel="stylesheet" href="../../frontend/static/css/style.css">
+        <link rel="stylesheet" href="/static/css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,7 +32,7 @@
         <div id="notifications"></div>
         <!--MODALS NEEDED: CONTACT, -->
         <div id="modals">
-            <div id="contactModal" class="modalWrapper">
+            <div id="contactModal" class="modalWrapper hidden">
                 <div class="modal">
                     <div class="title">Contact</div>
                     <div class="text">
@@ -92,45 +92,222 @@
                     </div>
                 </div>
             </div>
+            <div id="contactQuestion" class="modalWrapper hidden">
+                <div class="modal" style="max-width: 900px">
+                    <div class="title">Question</div>
+                    <div class="text">
+                        This option is for <strong>general questions</strong> you might have about our services, resources, or anything else we can assist with. Your question will be sent directly to the counselors and attached to your account for follow-up.
+                        <br><br>
+                        Please keep your questions <span class="accent-text">relevant and respectful</span>. Misuse of this system may result in account action. We appreciate your patience as we work to respond as soon as possible.
+                    </div>
+                    <form class="inputs">
+                        <label>Name</label>
+                        <input type="text" id="name" class="modalinput short">
+                        <label>Email</label>
+                        <input type="email" id="email" class="modalinput short">
+                        <label>Subject</label>
+                        <input type="text" id="subject" class="modalinput short">
+                        <label>Message</label>
+                        <textarea id="message" class="modalinput paragraph"></textarea>
+                        <div class="submit">
+                            <input type="submit" class="modalbutton">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="contactMeeting" class="modalWrapper hidden">
+                <div class="modal" style="max-width: 900px">
+                    <div class="title">Arrange Meeting</div>
+                    <div class="text">
+                        This option is for <strong>requesting a meeting</strong> with one of our counselors. Whether you'd like to schedule a check-in, discuss something in person, or plan a more formal session, this is the best way to get started. Your request will be sent directly to the counseling team and linked to your account for follow-up.
+                        <br><br>
+                        Please be as <span class="accent-text">clear and specific</span> as possible about your availability and reason for the meeting. Misuse of this system may result in account action. We appreciate your patience as we coordinate scheduling.
+                    </div>
+                    <form class="inputs">
+                        <label>Name</label>
+                        <input type="text" id="name" class="modalinput short">
+                        <label>Email</label>
+                        <input type="email" id="email" class="modalinput short">
+                        <label>Subject</label>
+                        <input type="text" id="subject" class="modalinput short">
+                        <label>Message</label>
+                        <textarea id="message" class="modalinput paragraph"></textarea>
+                        <label>Date</label><br>
+                        <input type="date" id="date" class="modalinput date">
+                        <div class="submit">
+                        <input type="submit" class="modalbutton">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="contactMental" class="modalWrapper hidden">
+                <div class="modal" style="max-width: 900px">
+                    <div class="title">Mental Health Support</div>
+                    <div class="text">
+                        This option is for <strong>mental health-related concerns</strong> or questions. Whether you're struggling, seeking resources, or just need someone to talk to, we’re here to support you. Your message will be sent directly to our trained counselors and attached to your account for follow-up.
+                        <br><br>
+                        Please keep your message <span class="accent-text">honest and respectful</span>. This system is a safe space — misuse may result in account action. We’re here for you and will respond as soon as possible.
+                    </div>
+                    <form class="inputs">
+                        <label>Name</label>
+                        <input type="text" id="name" class="modalinput short">
+                        <label>Email</label>
+                        <input type="email" id="email" class="modalinput short">
+                        <label>Subject</label>
+                        <input type="text" id="subject" class="modalinput short">
+                        <label>Message</label>
+                        <textarea id="message" class="modalinput paragraph"></textarea>
+                        <div class="submit">
+                            <input type="submit" class="modalbutton">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="contactRelationship" class="modalWrapper hidden">
+                <div class="modal" style="max-width: 900px">
+                    <div class="title">Relationship Counseling</div>
+                    <div class="text">
+                        This option is for <strong>relationship-related support</strong> — whether romantic, familial, or friendship-based. If you’re navigating a tough situation or need help improving your communication, we’re here to help. Your message will be sent directly to our counselors and associated with your account for thoughtful follow-up.
+                        <br><br>
+                        Please be <span class="accent-text">open and respectful</span> in your request. Misuse of this system may result in account action. We’re here to support healthy connections and look forward to helping.
+                    </div>
+                    <form class="inputs">
+                        <label>Name</label>
+                        <input type="text" id="name" class="modalinput short">
+                        <label>Email</label>
+                        <input type="email" id="email" class="modalinput short">
+                        <label>Subject</label>
+                        <input type="text" id="subject" class="modalinput short">
+                        <label>Message</label>
+                        <textarea id="message" class="modalinput paragraph"></textarea>
+                        <label>Others involved (if applicable)</label>
+                        <input type="text" id="subject" class="modalinput short">
+                        <div class="submit">
+                            <input type="submit" class="modalbutton">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="contactBusiness" class="modalWrapper hidden">
+                <div class="modal" style="max-width: 900px">
+                    <div class="title">Business Inquiry</div>
+                    <div class="text">
+                        This option is for <strong>professional or organizational inquiries</strong> regarding partnerships, programming, or service collaborations. Your message will be reviewed by the appropriate team and forwarded as needed.
+                        <br><br>
+                        Please keep your inquiry <span class="accent-text">professional and relevant</span>. Misuse of this system may result in account action. We appreciate your interest and will respond as soon as possible.
+                    </div>
+                    <form class="inputs">
+                        <label>Business/Name</label>
+                        <input type="text" id="name" class="modalinput short">
+                        <label>Email</label>
+                        <input type="email" id="email" class="modalinput short">
+                        <label>Subject</label>
+                        <input type="text" id="subject" class="modalinput short">
+                        <label>Message</label>
+                        <textarea id="message" class="modalinput paragraph"></textarea>
+                        <div class="submit">
+                            <input type="submit" class="modalbutton">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="contactTip" class="modalWrapper hidden">
+                <div class="modal" style="max-width: 900px">
+                    <div class="title">Tip Line</div>
+                    <div class="text">
+                        This option is for submitting <strong>anonymous tips or concerns</strong> related to safety, conduct, or community well-being. You are not required to include your name, and your message will be reviewed confidentially by our support team.
+                        <br><br>
+                        Please keep your submission <span class="accent-text">truthful and responsible</span>. False reports or misuse of this system may result in action. We take every concern seriously and thank you for helping us maintain a safe environment.                            
+                    </div>
+                    <form class="inputs">
+                        <label>Subject</label>
+                        <input type="text" id="subject" class="modalinput short">
+                        <label>Message</label>
+                        <textarea id="message" class="modalinput paragraph"></textarea>
+                        <div class="submit">
+                            <input type="submit" class="modalbutton">
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <!--MAIN APP-->
         <div id="root">
             <div class="navigation">
                 <div class="container">
                     <div class="left-items">
-                        <div class="logo">
+                        <a class="logo" href="/">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#646669">
                                 <path d="M9.16488 17.6505C8.92513 17.8743 8.73958 18.0241 8.54996 18.1336C7.62175 18.6695 6.47816 18.6695 5.54996 18.1336C5.20791 17.9361 4.87912 17.6073 4.22153 16.9498C3.56394 16.2922 3.23514 15.9634 3.03767 15.6213C2.50177 14.6931 2.50177 13.5495 3.03767 12.6213C3.23514 12.2793 3.56394 11.9505 4.22153 11.2929L7.04996 8.46448C7.70755 7.80689 8.03634 7.47809 8.37838 7.28062C9.30659 6.74472 10.4502 6.74472 11.3784 7.28061C11.7204 7.47809 12.0492 7.80689 12.7068 8.46448C13.3644 9.12207 13.6932 9.45086 13.8907 9.7929C14.4266 10.7211 14.4266 11.8647 13.8907 12.7929C13.7812 12.9825 13.6314 13.1681 13.4075 13.4078M10.5919 10.5922C10.368 10.8319 10.2182 11.0175 10.1087 11.2071C9.57284 12.1353 9.57284 13.2789 10.1087 14.2071C10.3062 14.5492 10.635 14.878 11.2926 15.5355C11.9502 16.1931 12.279 16.5219 12.621 16.7194C13.5492 17.2553 14.6928 17.2553 15.621 16.7194C15.9631 16.5219 16.2919 16.1931 16.9495 15.5355L19.7779 12.7071C20.4355 12.0495 20.7643 11.7207 20.9617 11.3787C21.4976 10.4505 21.4976 9.30689 20.9617 8.37869C20.7643 8.03665 20.4355 7.70785 19.7779 7.05026C19.1203 6.39267 18.7915 6.06388 18.4495 5.8664C17.5212 5.3305 16.3777 5.3305 15.4495 5.8664C15.2598 5.97588 15.0743 6.12571 14.8345 6.34955" stroke="#646669" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                        </div>
+                        </a>
                         <div class="nav-left">
-                            <a href="#">Listings</a>
-                            <a href="#">Resources</a>
+                            <a href="/listings">Listings</a>
+                            <a href="/resources">Resources</a>
                         </div>
                     </div>
                     <div class="right-items">
                         <!--LANGUAGE DROPDOWN GOES HERE-->
-                        <button onclick="openContactModal()" class="contact-button">Contact</button>
+                        <button id="contact-open" class="contact-button">Contact</button>
                         <div class="nav-right">
-                            <button class="hamburger">
-                                <i class="fas fa-bars"></i>
-                            </button>
-                            <button class="pill-button sign-up">Register</button>
-                            <button class="pill-button log-in">Log In</butotn>
+                            <button class="pill-button sign-up" onclick="window.location.href = '/register'" id="register-btn">Register</button>
+                            <button class="pill-button log-in" onclick="window.location.href = '/login'" id="login-btn">Log In</button>
+
+                            <div id="dropdown" class="dropdown hidden">
+                                <div class="usertoggle" id="usertoggle">
+                                    <img src="/static/img/default.png" class="avatar">
+                                    <span id="username">John D.</span>
+                                    <i class="fas fa-chevron-down arrow"></i>
+                                </div>
+                                <div class="menu" id="menu">
+                                    <a href="/portfolio/" id="portfoliobtn">Portfolio</a>
+                                    <a href="/jobs/" id="portfoliobtn">Jobs</a>
+                                    <a href="" id="logoutbtn">Log Out</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="portfolio">
-                <div class="banner">
-                    <img class="splash" src="https://scontent.fcps2-1.fna.fbcdn.net/v/t39.30808-6/481787066_912794791063445_2425473977028419960_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=_LANSb6W5L0Q7kNvgGo45p6&_nc_zt=23&_nc_ht=scontent.fcps2-1.fna&_nc_gid=AP8PhyT4pMlNLzkd44ZFoPs&oh=00_AYFZOoZ_TKSfD9ukbbVr41ErXRRF2oJmG9Lr4DbV3z0r-g&oe=67D3F7E9">
+            <div class="listing">
+                <div class="splash">
+                    <div class="container" style="background: url('SplashIcon') center center / cover no-repeat"></div>
                 </div>
-                <div class="desktop">
+                <div class="info">
                     <div class="icon">
-                        <img src="https://scontent.fcps2-1.fna.fbcdn.net/v/t39.30808-1/481765875_912794317730159_4559635889515420816_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=109&ccb=1-7&_nc_sid=e99d92&_nc_ohc=NLrT9MetZokQ7kNvgFYP-Oy&_nc_zt=24&_nc_ht=scontent.fcps2-1.fna&_nc_gid=AHJSUDsSxDgHeVtDe-fd0Kg&oh=00_AYHpewQsntj_5IwUHrV0W1izqYZkIKmHTMaA9kdHvwIiig&oe=67D3FA32">
+                        <img src="Avatar">
+                    </div>
+                    <div class="text">
+                        <h1>Name/portfolio</h1>
+                        <h3>Email/portfolio</h3>
+                        <h3>Phone/portfolio</h3>
                     </div>
                 </div>
-                <div class="mobile"></div>
+                <hr>
+                <div class="idetails" style="grid-template-columns: 1fr;">
+                    <div class="job">
+                        <div>
+                            <h3>About</h3>
+                            <h5>AboutBlurb</h5>
+                        </div>
+                        <div>
+                            <h3>Experience</h3>
+                            <h5>ExperienceBlurb</h5>
+                        </div>
+                        <div>
+                            <h3>Education</h3>
+                            <h5>EducationBlurb</h5>
+                        </div>
+                        <div>
+                            <h3>Skills</h3>
+                            <h5>SkillsBlurb</h5>
+                        </div>
+                        <div>
+                            <h3>Achievements</h3>
+                            <h5>AchievementsBlurb</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
             <footer>
                 <div class="footer">
@@ -166,19 +343,30 @@
                             <div class="header">Policies</div>
                             <ul class="links">
                                 <div>
-                                    <a class="link" href="/">Terms of Service</a>
+                                    <a class="link" href="/resources/terms-of-service">Terms of Service</a>
                                 </div>
                                 <div>
-                                    <a class="link" href="/">Privacy Policy</a>
+                                    <a class="link" href="/resources/privacy-policy">Privacy Policy</a>
                                 </div>
                                 <div>
-                                    <a class="link" href="/">Community Guidelines</a>
+                                    <a class="link" href="/resources/community-guidelines">Community Guidelines</a>
                                 </div>
                                 <div>
-                                    <a class="link" href="/">Security Policy</a>
+                                    <a class="link" href="/resources/security-policy">Security Policy</a>
                                 </div>
                                 <div>
-                                    <a class="link" href="/">Cookie Policy</a>
+                                    <a class="link" href="/resources/cookie-policy">Cookie Policy</a>
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <div class="header">Company</div>
+                            <ul class="links">
+                                <div>
+                                    <a class="link" href="/resources/mission-statement">Mission Statement</a>
+                                </div>
+                                <div>
+                                    <a class="link" href="/resources/our-team">Our Team</a>
                                 </div>
                             </ul>
                         </div>
@@ -189,7 +377,7 @@
                 </div>
             </footer>
         </div>
-        <script src="../../static/js/script.js"></script>
+        <script src="/static/js/script.js"></script>
     </body>
 </html>
 

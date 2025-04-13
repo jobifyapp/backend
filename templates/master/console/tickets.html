@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <title>Jobify | Home</title>
         <!--FILL IN THE FAVICON-->
-        <link rel="icon" type="image/x-icon" sizes="32x32" href="">
+        <link rel="icon" type="image/x-icon" sizes="32x32" href="/static/img/logo.png">
         <meta name="author" content="Emerson Reinhard">
-        <link rel="stylesheet" href="../frontend/static/css/style.css">
+        <link rel="stylesheet" href="/static/css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,64 +32,42 @@
         <div id="notifications"></div>
         <!--MODALS NEEDED: CONTACT, -->
         <div id="modals">
-            <div id="contactModal" class="modalWrapper hidden">
-                <div class="modal">
-                    <div class="title">Contact</div>
+            <div id="postAnnouncementModal" class="modalWrapper hidden">
+                <div class="modal" style="min-width: 900px">
+                    <div class="title">Post Announcement</div>
                     <div class="text">
-                        This contact system will send a message <strong>directly</strong> to the counselors. All tickets are attached to your account except for tip lines when the anonymous option is selected.
+                        This will send an notification to <strong>all active</strong> accounts, and leave a notification in all accounts inboxes.
                         <br><br>
-                        Please <span class="accent-text">do not send</span> troll tickets, this may lead to repercussions beyond the website. In addition to this, do not boost your ticket, we will get back to you as soon as possible.
+                        Ensure that your message is <span class="accent-text">complete and accurate,</span> as you cannot edit these after they are sent.
                     </div>
-                    <div class="buttons">
-                        <button id="question" class="button">
-                            <div class="icon">
-                                <i class="fas fa-question-circle"></i>
+                    <form class="inputs">
+                        <label>Title</label>
+                        <input type="text" id="title" class="modalinput short">
+                        <label>Message</label>
+                        <input type="text" id="title" class="modalinput short">
+                        <label>Type</label>
+                        <div class="radioinput rifour">
+                            <div class="roption">
+                                <input type="radio" name="s" id="notice" class="radioinput radio">
+                                <label for="notice">Notice (blue)</label>
                             </div>
-                            <div class="textgroup">
-                                <div class="text">Question</div>
+                            <div class="roption">
+                                <input type="radio" name="s" id="success" class="radioinput radio">
+                                <label for="success">Success (green)</label>
                             </div>
-                        </button>
-                        <button id="arrangeMeeting" class="button">
-                            <div class="icon">
-                                <i class="fas fa-calendar-check"></i>
+                            <div class="roption">
+                                <input type="radio" name="s" id="warning" class="radioinput radio">
+                                <label for="warning">Warning (yellow)</label>
                             </div>
-                            <div class="textgroup">
-                                <div class="text">Arrange Meeting</div>
+                            <div class="roption">
+                                <input type="radio" name="s" id="danger" class="radioinput radio">
+                                <label for="danger">Danger (red)</label>
                             </div>
-                        </button>
-                        <button id="mentalHealth" class="button">
-                            <div class="icon">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                            <div class="textgroup">
-                                <div class="text">Mental Health Support</div>
-                            </div>
-                        </button>
-                        <button id="relationshipCounseling" class="button">
-                            <div class="icon">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <div class="textgroup">
-                                <div class="text">Relationship Counseling</div>
-                            </div>
-                        </button>
-                        <button id="businessInquiry" class="button">
-                            <div class="icon">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
-                            <div class="textgroup">
-                                <div class="text">Business Inquiry</div>
-                            </div>
-                        </button>
-                        <button id="tipLine" class="button">
-                            <div class="icon">
-                                <i class="fas fa-user-secret"></i>
-                            </div>
-                            <div class="textgroup">
-                                <div class="text">Tip Line</div>
-                            </div>
-                        </button>
-                    </div>
+                        </div>
+                        <div class="submit">
+                            <input type="submit" value="Post" class="modalbutton">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -98,86 +76,44 @@
             <div class="navigation">
                 <div class="container">
                     <div class="left-items">
-                        <div class="logo">
+                        <a class="logo" href="/">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#646669">
                                 <path d="M9.16488 17.6505C8.92513 17.8743 8.73958 18.0241 8.54996 18.1336C7.62175 18.6695 6.47816 18.6695 5.54996 18.1336C5.20791 17.9361 4.87912 17.6073 4.22153 16.9498C3.56394 16.2922 3.23514 15.9634 3.03767 15.6213C2.50177 14.6931 2.50177 13.5495 3.03767 12.6213C3.23514 12.2793 3.56394 11.9505 4.22153 11.2929L7.04996 8.46448C7.70755 7.80689 8.03634 7.47809 8.37838 7.28062C9.30659 6.74472 10.4502 6.74472 11.3784 7.28061C11.7204 7.47809 12.0492 7.80689 12.7068 8.46448C13.3644 9.12207 13.6932 9.45086 13.8907 9.7929C14.4266 10.7211 14.4266 11.8647 13.8907 12.7929C13.7812 12.9825 13.6314 13.1681 13.4075 13.4078M10.5919 10.5922C10.368 10.8319 10.2182 11.0175 10.1087 11.2071C9.57284 12.1353 9.57284 13.2789 10.1087 14.2071C10.3062 14.5492 10.635 14.878 11.2926 15.5355C11.9502 16.1931 12.279 16.5219 12.621 16.7194C13.5492 17.2553 14.6928 17.2553 15.621 16.7194C15.9631 16.5219 16.2919 16.1931 16.9495 15.5355L19.7779 12.7071C20.4355 12.0495 20.7643 11.7207 20.9617 11.3787C21.4976 10.4505 21.4976 9.30689 20.9617 8.37869C20.7643 8.03665 20.4355 7.70785 19.7779 7.05026C19.1203 6.39267 18.7915 6.06388 18.4495 5.8664C17.5212 5.3305 16.3777 5.3305 15.4495 5.8664C15.2598 5.97588 15.0743 6.12571 14.8345 6.34955" stroke="#646669" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                        </div>
+                        </a>
                         <div class="nav-left">
-                            <a href="#">Listings</a>
-                            <a href="#">Resources</a>
+                            <a href="/listings">Listings</a>
+                            <a href="/resources">Resources</a>
                         </div>
                     </div>
                     <div class="right-items">
                         <!--LANGUAGE DROPDOWN GOES HERE-->
-                        <button onclick="openContactModal()" class="contact-button">Contact</button>
+                        <button id="contact-open" class="contact-button">Contact</button>
                         <div class="nav-right">
-                            <button class="pill-button sign-up">Register</button>
-                            <butotn class="pill-button log-in">Log In</butotn>
+                            <button class="pill-button sign-up" onclick="window.location.href = '/register'" id="register-btn">Register</button>
+                            <button class="pill-button log-in" onclick="window.location.href = '/login'" id="login-btn">Log In</button>
+
+                            <div id="dropdown" class="dropdown hidden">
+                                <div class="usertoggle" id="usertoggle">
+                                    <img src="/static/img/default.png" class="avatar">
+                                    <span id="username">John D.</span>
+                                    <i class="fas fa-chevron-down arrow"></i>
+                                </div>
+                                <div class="menu" id="menu">
+                                    <a href="/portfolio/" id="portfoliobtn">Portfolio</a>
+                                    <a href="/jobs/" id="portfoliobtn">Jobs</a>
+                                    <a href="" id="logoutbtn">Log Out</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="listing">
-                <div class="splash">
-                    <div class="container" style="background: url('https://marketplace.canva.com/EAFvvmdGnVI/1/0/1600w/canva-colorful-playful-illustrative-mascot-pizza-logo-S3l4RHfR_aI.jpg') center center / cover no-repeat"></div>
+            <div class="console">
+                <h1>Welcome to the ticket panel! Please select a ticket!</h1>
+                <div class="options" id="options">
+                    <h5>There are no active tickets. Way to stay on top of it team!</h5>
                 </div>
-                <div class="info">
-                    <div class="icon">
-                        <img src="https://marketplace.canva.com/EAFvvmdGnVI/1/0/1600w/canva-colorful-playful-illustrative-mascot-pizza-logo-S3l4RHfR_aI.jpg">
-                    </div>
-                    <div class="text">
-                        <h1>Fauget Pizza</h1>
-                        <h3>New York City, NY</h3>
-                    </div>
-                    <div class="details">
-                        <div class="blurb">
-                            <i class="fas fa-coins"></i>
-                            <h3>$10.50 / hour</h3>
-                        </div>
-                        <div class="blurb">
-                            <i class="fas fa-suitcase"></i>
-                            <h3>Flexible</h3>
-                        </div>
-                        <div class="blurb">
-                            <i class="fas fa-clock"></i>
-                            <h3>Posted 3 days ago</h3>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="idetails">
-                    <div class="job">
-                        <div>
-                            <h3>About</h3>
-                            <h5>Hey! I own an Italian Winery and am looking for a good employee. I need someone who is hard-working, is flexible with their hours, is good at remembering orders, and can do simple math. They need to be able to be on their feet for long periods of time and be able to lift and carry up to 15 pound boxes.</h5>
-                        </div>
-                        <div>
-                            <h3>Skills</h3>
-                            <h5>- Carrying heavy boxes<br>- Working with kids<br>- Good at remembering orders</h5>
-                        </div>
-                        <div>
-                            <h3>Responsibilities</h3>
-                            <h5>- Take and transport orders<br>- Ensure quality customer service<br>- Serve delicious food!</h5>
-                        </div>
-                        <div>
-                            <h3>Benefits</h3>
-                            <h5>- Flexible hours<br>- Discounts on all merchandise and meals<br>- Gaining new skills<br>- On the job training</h5>
-                        </div>
-                        <div>
-                            <h3>Requirements</h3>
-                            <h5>- 16 years old<br>- Valid driver's license</h5>
-                        </div>
-                    </div>
-                    <div class="employer">
-                        <h3>Meet the employer</h3>
-                        <div class="profile">
-                            <img src="https://lh3.googleusercontent.com/a-/ALV-UjUDXtNfm2EYVoAve_5jXNYiBKaXecH11Zs_A7XEJ_znoCNbpAA=s64-p-k-rw-no">
-                            <h1>Mr Randolph</h1>
-                        </div>
-                    </div>
-                </div>
-                <h6>Jobify tries it's best to ensure safety of the students, and we filter all of our listings before they are posted. If you believe this listing may cause danger to ANY student, please report it to a counselor.</h6>
             </div>
             <footer>
                 <div class="footer">
@@ -213,19 +149,30 @@
                             <div class="header">Policies</div>
                             <ul class="links">
                                 <div>
-                                    <a class="link" href="/">Terms of Service</a>
+                                    <a class="link" href="/resources/terms-of-service">Terms of Service</a>
                                 </div>
                                 <div>
-                                    <a class="link" href="/">Privacy Policy</a>
+                                    <a class="link" href="/resources/privacy-policy">Privacy Policy</a>
                                 </div>
                                 <div>
-                                    <a class="link" href="/">Community Guidelines</a>
+                                    <a class="link" href="/resources/community-guidelines">Community Guidelines</a>
                                 </div>
                                 <div>
-                                    <a class="link" href="/">Security Policy</a>
+                                    <a class="link" href="/resources/security-policy">Security Policy</a>
                                 </div>
                                 <div>
-                                    <a class="link" href="/">Cookie Policy</a>
+                                    <a class="link" href="/resources/cookie-policy">Cookie Policy</a>
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <div class="header">Company</div>
+                            <ul class="links">
+                                <div>
+                                    <a class="link" href="/resources/mission-statement">Mission Statement</a>
+                                </div>
+                                <div>
+                                    <a class="link" href="/resources/our-team">Our Team</a>
                                 </div>
                             </ul>
                         </div>
@@ -237,6 +184,7 @@
             </footer>
         </div>
         <script src="/static/js/script.js"></script>
+        <script>window.onload = fetchTickets()</script>
     </body>
 </html>
 
