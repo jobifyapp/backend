@@ -7,6 +7,7 @@ const path = require('path')
 const jwt = require('jsonwebtoken')
 const pool = require('./database')
 const cookieparser = require('cookie-parser')
+const { createClient } = require('@supabase/supabase-js');
 
 const app = express()
 const port = 3000
@@ -586,7 +587,7 @@ app.post('/post', async (req, res) => {
 app.post('/approve', async (req, res) => {
     try {
         await pool.query('UPDATE listings SET approved = true WHERE id = $1', [req.body.id])
-        res.sendStatus(200).json({ message: 'approved' })
+        res.sendStatus(200).send('Approved')
     } catch (err) {
         console.error('Approval error:', err)
         res.status(500).send('Server error')
